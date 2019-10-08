@@ -1,5 +1,8 @@
 // server.js
 // where your node app starts
+console.log('Startando...');
+
+
 
 // init project
 const express = require("express");
@@ -21,6 +24,9 @@ app.use(express.static("public"));
 //https://bbrk-webhook.glitch.me/bbrkwebhook
 
 app.post("/bbrk", function(request, response) {
+
+    console.log('AI!');
+    
   var intentName = request.body.queryResult.intent.displayName;
 
   if (intentName == "bbrk.boasvindas.busca") {
@@ -39,7 +45,7 @@ app.post("/bbrk", function(request, response) {
     //var estadoQ = estadoP != "" ? estadoP.split(" ") :"";
     
     //var bairroQ = splitaString(bairroP);
-    var bairroQ = bairroP.split(" ").map(val => Number(val) + 1);
+    //var bairroQ = bairroP.split(" ").map(val => Number(val) + 1);
     
     response.json({
       payload: {
@@ -177,8 +183,8 @@ function splitaString(string){
 }
 
 // listen for requests :)
-const listener = app.listen(process.env.PORT, function() {
-  console.log("Your app is listening on port " + listener.address().port);
-});
+// const listener = app.listen(process.env.PORT, function() {
+//   console.log("Your app is listening on port " + listener.address().port);
+// });
 
-let intentMap = new Map();
+//let intentMap = new Map();
