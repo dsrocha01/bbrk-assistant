@@ -21,7 +21,7 @@ app.use(express.static("public"));
 //https://bbrk-webhook.glitch.me/bbrkwebhook
 
 app.post("/bbrk", function(request, response) {
-
+ 
     console.log('AI!');
     
   var intentName = request.body.queryResult.intent.displayName;
