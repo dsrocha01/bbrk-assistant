@@ -175,9 +175,9 @@ app.post("/bbrk", function(request, response) {
 });
 
 
-function splitaString(string){
-   return string.length > 0 ? string.split(" ") : "";
-}
+// function splitaString(string){
+//    return string.length > 0 ? string.split(" ") : "";
+// }
 
 // listen for requests :)
 // const listener = app.listen(process.env.PORT, function() {
