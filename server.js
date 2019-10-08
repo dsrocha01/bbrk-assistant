@@ -1,8 +1,5 @@
 // server.js
 // where your node app starts
-console.log('Startando...');
-
-
 
 // init project
 const express = require("express");
