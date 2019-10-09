@@ -21,9 +21,6 @@ app.use(express.static("public"));
 //https://bbrk-webhook.glitch.me/bbrkwebhook
 
 app.post("/bbrk", function(request, response) {
- 
-    
-    
   var intentName = request.body.queryResult.intent.displayName;
 
   if (intentName == "bbrk.boasvindas.busca") {
@@ -36,15 +33,50 @@ app.post("/bbrk", function(request, response) {
     var cidadeP = parameters["cidade"];
     var estadoP = parameters["estado"];
     
-    //Quebra do parametro em array
-    //var bairroQ = bairroP != "" ? bairroP.split(" ") :"";
-    //var cidadeQ = cidadeP != "" ? cidadeP.split(" ") :"";
-    //var estadoQ = estadoP != "" ? estadoP.split(" ") :"";
-    
-    //var bairroQ = splitaString(bairroP);
-    //var bairroQ = bairroP.split(" ").map(val => Number(val) + 1);
-    
-    response.json({
+    if (tipoImovel != "") {
+      
+      //Quebra do parametro em array
+        var bairroQ = bairroP.split(" "),
+            cidadeQ = cidadeP.split(" "),
+            estadoQ = estadoP.split(" ");
+
+        //Variaveis finais
+        var bairro ="",
+            cidade ="",
+            estado ="",
+            localidade ="";
+
+      //montagem para o bairro formatado
+      for(var i=0; i < bairroQ.length; i++ ){
+        if(i == 0){
+          bairro += bairroQ[i].toLocaleLowerCase();
+        }else{
+          bairro+= '-'+bairroQ[i].toLocaleLowerCase();
+        }
+      }
+
+      //montagem para a cidade formatada
+      for(var i=0; i < cidadeQ.length; i++ ){
+        if(i==0){
+          cidade+= cidadeQ[i].toLocaleLowerCase();
+        }else{
+          cidade+= '-'+cidadeQ[i].toLocaleLowerCase();
+        }
+      }
+
+      //montagem para o estado formatado
+      for(var i=0; i < estadoQ.length; i++ ){
+        if(i==0){
+          estado+= estadoQ[i].toLocaleLowerCase();
+        }else{
+          estado+= '-'+estadoQ[i].toLocaleLowerCase();
+        }
+      }
+
+        localidade = bairro + '|' + cidade + '|' + estado;
+      //localidade = "barra-da-tijuca|rio-de-janeiro|rj";
+      
+      response.json({
       payload: {
         google: {
           expectUserResponse: true,
@@ -53,34 +85,7 @@ app.post("/bbrk", function(request, response) {
               {
                 simpleResponse: {
                   textToSpeech:
-                    "Certo, já coletei os dados para busca, basta clicar no link a seguir para visualizar o resultado. " 
-                }
-              },
-              {
-                basicCard: {
-                  title: "Busca de Imóveis Brasil Brokers",
-                  //"subtitle": tipoImovel +" "+ quantidadeComodos +" "+ localidade,
-                  //"formattedText": "This is a basic card.",
-                  image: {
-                    url: "https://dev.brasilbrokers.com.br/mina.png",
-                    accessibilityText: "Olá, eu sou a Mina !"
-                  },
-                  buttons: [
-                    {
-                      title: "  Clique Aqui  ",
-                      openUrlAction: {
-                        //"url": "https://dev.brasilbrokers.com.br/busca/?tipologia="+tipoImovel+"&dormitorio="+quantidadeComodos+"&localizacao="+localidade
-                        url: "https://dev.brasilbrokers.com.br/"
-                      }
-                    }
-                  ],
-                  imageDisplayOptions: "CROPPED"
-                }
-              },
-              {
-                simpleResponse: {
-                  textToSpeech:
-                    "Espero que encontre o imóvel que busca, até mais ! ! !"
+                    "Ola Ola Ola" 
                 }
               }
             ]
@@ -88,44 +93,7 @@ app.post("/bbrk", function(request, response) {
         }
       }
     });
-
-    //Variaveis finais
-    var bairro = "";
-    var cidade = "";
-    var estado = "";
-    var localidade = "";
-
-    if (tipoImovel != "") {
-      //montagem para o bairro formatado
-      for (var i = 0; i < bairroQ.length; i++) {
-        if (i == 0) {
-          bairro += bairroQ[i].toLocaleLowerCase();
-        } else {
-          bairro += "-" + bairroQ[i].toLocaleLowerCase();
-        }
-      }
-
-      //montagem para a cidade formatada
-      for (var i = 0; i < cidadeQ.length; i++) {
-        if (i == 0) {
-          cidade += cidadeQ[i].toLocaleLowerCase();
-        } else {
-          cidade += "-" + cidadeQ[i].toLocaleLowerCase();
-        }
-      }
-
-      //montagem para o estado formatado
-      for (var i = 0; i < estadoQ.length; i++) {
-        if (i == 0) {
-          estado += estadoQ[i].toLocaleLowerCase();
-        } else {
-          estado += "-" + estadoQ[i].toLocaleLowerCase();
-        }
-      }
-
-      localidade = bairro + "|" + cidade + "|" + estado;
-      //localidade = "barra-da-tijuca|rio-de-janeiro|rj";
-
+      
       response.json({
         payload: {
           google: {
@@ -170,18 +138,18 @@ app.post("/bbrk", function(request, response) {
           }
         }
       });
-    }
+    } 
   }
 });
 
 
-// function splitaString(string){
-//    return string.length > 0 ? string.split(" ") : "";
-// }
+function splitaString(string){
+   return string.length > 0 ? string.split(" ") : "";
+}
 
 // listen for requests :)
-// const listener = app.listen(process.env.PORT, function() {
-//   console.log("Your app is listening on port " + listener.address().port);
-// });
+const listener = app.listen(process.env.PORT, function() {
+  console.log("Your app is listening on port " + listener.address().port);
+});
 
-//let intentMap = new Map();
+let intentMap = new Map();
