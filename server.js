@@ -29,9 +29,15 @@ app.post("/bbrk", function(request, response) {
     //Parametro inteiro
     var tipoImovel = parameters["tipo-imovel"];
     var quantidadeComodos = parameters["comodos"];
-    var bairroP = parameters["bairro"];
-    var cidadeP = parameters["cidade"];
-    var estadoP = parameters["estado"];
+    // var bairroP = parameters["bairro"];
+    // var cidadeP = parameters["cidade"];
+    // var estadoP = parameters["estado"];
+    
+    var bairroP = "barra da tijuCA";
+    var cidadeP = "rio de Janeiro";
+    var estadoP = "RJ";
+
+    
     
     if (tipoImovel != "") {
       
